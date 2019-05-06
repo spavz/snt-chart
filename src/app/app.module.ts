@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -17,6 +22,10 @@ PlotlyModule.plotlyjs = PlotlyJS;
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AngularFireStorageModule,
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
     PlotlyModule
   ],
   providers: [],

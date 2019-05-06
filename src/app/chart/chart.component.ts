@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-chart',
@@ -19,7 +20,11 @@ export class ChartComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor(public db: AngularFirestore) {
+    this.items = this.db.collection('sensors').valueChanges();
+
+   }
+  items: Observable<any[]>;
 
   ngOnInit() {
 
