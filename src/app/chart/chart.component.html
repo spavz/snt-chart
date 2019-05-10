@@ -1,8 +1,44 @@
-<plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
-
-
 <ul>
     <li class="text" *ngFor="let item of items | async">
         {{item | json}}
     </li>
 </ul>
+<div class="select-group">
+    Node:
+    <select class="s-select" [(ngModel)]="selectedNode">
+        <option selected disabled hidden style='display: none' value=''></option>
+
+        <option *ngFor="let c of Nodes" [ngValue]="c">{{c}}</option>
+    </select>
+
+
+</div>
+
+
+
+
+<div class="pull-right" *ngFor="let n of Nodes">
+    <ng-container *ngIf="n === selectedNode">
+
+        <ng-container *ngFor="let sensorType of SensorTypes">
+            <plotly-plot [data]="sensorDataMap.get(sensorType)" [layout]="sensorDataLayout.get(sensorType)">
+            </plotly-plot>
+
+            <ul class="list-group">
+                <li class="list-group-item">Device : {{selectedNode}}</li>
+                <li *ngFor="let sensorType of SensorTypes" class="list-group-item"> Average {{sensorType}} :
+                    {{ this.sensorDataStats.get(sensorType) }} </li>
+
+                <li *ngFor="let sensorType of SensorTypes" class="list-group-item"> Current {{sensorType}} :
+                    {{ this.sensorDataCurrent.get(sensorType) }} </li>
+            </ul>
+
+        </ng-container>
+
+        <br>
+        <br>
+
+    </ng-container>
+
+
+</div>
